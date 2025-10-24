@@ -1,0 +1,6 @@
+BookingID,FlightID,PassengerID,SeatNumber,Status
+B001,F001,P001,12A,Confirmed
+B002,F001,P002,12B,Confirmed
+B003,F003,P003,45B,Checked-In
+B004,F004,P004,22F,Cancelled
+B005,F005,P005,6A,Confirmed

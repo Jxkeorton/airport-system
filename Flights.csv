@@ -1,0 +1,6 @@
+FlightID,DepartureCity,ArrivalCity,DateTime,FlightCapacity,SeatNumber,CostPerSeat,Status
+F001,London,Paris,2025-11-12 09:30,180,12A,120.0,Scheduled
+F002,Paris,Rome,2025-11-12 14:45,160,10C,150.0,Scheduled
+F003,New York,London,2025-11-13 19:20,300,45B,550.0,Scheduled
+F004,Tokyo,Seoul,2025-11-14 08:15,200,22F,200.0,Cancelled
+F005,Sydney,Melbourne,2025-11-15 07:10,150,6A,95.0,Scheduled
