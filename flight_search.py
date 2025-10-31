@@ -1,5 +1,11 @@
 from datetime import datetime
 
+# Search algorithm notes
+# Ordered or unordered linear search ? 
+#   benefits of ordered is that we can stop early during a search.
+# Binary search algorithm ? 
+# Ternary search algorithm ?
+
 # Search flights
 class FlightSearch:
     def __init__(self, flights):
