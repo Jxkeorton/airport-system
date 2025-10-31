@@ -66,7 +66,9 @@ class BookingSystem:
         
         # Check if flight is scheduled or completed (not cancelled)
         if flight['Status'] == 'Cancelled':
-            return False, f"Error: Flight {flight_id} has been cancelled."
+            return False, f"Flight {flight_id} has been cancelled."
+        elif flight['Status'] == 'Completed':
+            return False, f"Flight {flight_id} is not available for booking"
         
         return True, f"Flight validated: {flight['DepartureCity']} to {flight['ArrivalCity']} on {flight['DateTime']}"
 
