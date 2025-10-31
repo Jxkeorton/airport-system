@@ -15,6 +15,8 @@ from datetime import datetime
 
 # consider search algorithms specific to numeric and non numeric data ?
 
+# Justify programming language used 
+
 # Create a data structure for each iteration of the search ? 
 #   this could be achieved by sorting data as it is collected from the data structure in the file manager.
 #   alternatively the data could be collected per key and then sorted into a list in the end through filtering and merging <- seems slower 
