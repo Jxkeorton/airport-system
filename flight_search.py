@@ -8,6 +8,12 @@ from datetime import datetime
 # Ternary search algorithm ? 
 #   Ternary search is a divide-and-conquer algorithm that works on sorted arrays.
 #  It divides the array into three parts and determines which part may contain the target value.
+# Interpolation search ? 
+#   Interpolation search is an improved variant of binary search that works on the probing position of
+#   the required value. It is best suited for uniformly distributed data. 
+#   could use this method to search via date ranges if data is sorted by date.
+
+# consider search algorithms specific to numeric and non numeric data ?
 
 # Create a data structure for each iteration of the search ? 
 #   this could be achieved by sorting data as it is collected from the data structure in the file manager.
@@ -28,7 +34,7 @@ class FlightSearch:
         date = datetime.strptime(date, "%Y-%m-%d")
         results = [
             flight for flight in self.flights
-            if flight.departure_city == departure_city and
+            if  
                flight.arrival_city == arrival_city and
                flight.date_time.date() == date.date() and
                flight.is_available()
