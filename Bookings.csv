@@ -14999,3 +14999,5 @@ BookingID,FlightID,PassengerID,SeatNumber,Status
 14998,1833,4343,58,Cancelled
 14999,269,1688,13,Checked-in
 15000,1609,8763,93,Cancelled
+15001,37,4,5,Booked
+15002,21,17,62,Booked
