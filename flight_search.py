@@ -56,7 +56,7 @@ class FlightSearch:
         # Convert the filtered DataFrame to a list of dictionaries (or another format if needed)
         return results.to_dict('records')
 
-    def interactive_search_and_booking(self):
+    def flight_search(self):
         """
         Perform an interactive flight search and handle booking logic.
         """

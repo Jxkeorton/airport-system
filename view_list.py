@@ -1,25 +1,14 @@
-import csv
 from utils.sort_data import merge_sort
 
-#hi
-#hi from jake
+def view_flights_by_price(airport_data):
+    flights = airport_data.flights.to_dict("records")  # Get flights as a list of dictionaries
 
-def load_csv_data(filename):
-    """Reads a CSV file and returns a list of dictionaries."""
-    with open(filename, mode='r', encoding='utf-8-sig') as file:
-        reader = csv.DictReader(file)
-        return list(reader)
-
-
-def view_flights_by_price(flights_csv):
-
-    flights = load_csv_data(flights_csv)
     # Convert CostPerSeat to float for sorting
     for f in flights:
         try:
             f["CostPerSeat"] = float(f["CostPerSeat"])
         except ValueError:
-            f["CostPerSeat"] = 0.0  # handle missing or invalid data
+            f["CostPerSeat"] = 0.0  # Handle missing or invalid data
 
     print("\nFlights Sorted by Cost (High → Low):")
     sorted_flights = merge_sort(flights, "CostPerSeat", reverse=True)
@@ -31,9 +20,9 @@ def view_flights_by_price(flights_csv):
         )
 
 
-def view_reservations_by_date(bookings_csv):
-    reservations = load_csv_data(bookings_csv)
-    
+def view_reservations_by_date(airport_data):
+    reservations = airport_data.bookings.to_dict("records")  # Get bookings as a list of dictionaries
+
     if not reservations:
         print("No booking data found.")
         return
@@ -48,9 +37,8 @@ def view_reservations_by_date(bookings_csv):
         )
 
 
-
-def view_passengers(passengers_csv):
-    passengers = load_csv_data(passengers_csv)
+def view_passengers(airport_data):
+    passengers = airport_data.passengers.to_dict("records")  # Get passengers as a list of dictionaries
 
     if not passengers:
         print("No passenger data found.")
@@ -60,27 +48,25 @@ def view_passengers(passengers_csv):
     for p in passengers:
         print(f"{p['PassengerID']} | {p['FirstName']} {p['Surname']} | DOB: {p['DOB']} | Email: {p['Email']}")
 
-def view_main(flights_csv, passengers_csv, bookings_csv):
+
+def view_list(airport_data):
     while True:
         print("\n--- EDD Airlines Viewing System ---")
         print("1 - View Flights (by Price)")
         print("2 - View Reservations (by Date)")
-        
         print("3 - View Passengers")
         print("0 - Exit")
 
         choice = input("Enter choice: ")
 
         if choice == "1":
-            view_flights_by_price( flights_csv )
+            view_flights_by_price(airport_data)
         elif choice == "2":
-            view_reservations_by_date( bookings_csv )
+            view_reservations_by_date(airport_data)
         elif choice == "3":
-            view_passengers( passengers_csv )
+            view_passengers(airport_data)
         elif choice == "0":
             print("Exiting Viewer...")
             break
         else:
             print("Invalid choice. Try again!")
-
-
