@@ -1,6 +1,6 @@
 import pandas as pd
 
-from Flight_Manager_Panda import AirportDataOptimized
+from Flight_Manager import AirportDataOptimized
 
 class BookingSystem:
     """Main booking system to handle flight seat reservations"""

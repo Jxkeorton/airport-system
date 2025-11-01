@@ -25,8 +25,12 @@
 #  Make search more flexible
 
 # Search flights
+
+from Flight_Manager import AirportDataOptimized
+from bookings import BookingSystem
+from utils.clear_screen import clear_screen
+
 from datetime import datetime
-from Flight_Manager_Panda import AirportDataOptimized
 import pandas as pd
 
 class FlightSearch:
@@ -51,3 +55,29 @@ class FlightSearch:
 
         # Convert the filtered DataFrame to a list of dictionaries (or another format if needed)
         return results.to_dict('records')
+
+    def interactive_search_and_booking(self):
+        """
+        Perform an interactive flight search and handle booking logic.
+        """
+        departure = input("Enter departure city: ")
+        arrival = input("Enter arrival city: ")
+        date = input("Enter date (YYYY-MM-DD): ")
+
+        results = self.search(departure, arrival, date)
+        if results:
+            print("\nAvailable flights:")
+            for flight in results:
+                print(flight)
+
+            book_now = input("\nWould you like to book a seat? (yes/no): ").lower()
+            if book_now == "yes":
+                clear_screen()
+                print("Loading Booking System...")
+                booking_system = BookingSystem(self.airport_data)
+                booking_system.interactive_booking()
+            else:
+                input("\nPress Enter to return to the main menu...")
+        else:
+            print("\nNo flights available.")
+            input("\nPress Enter to return to the main menu...")

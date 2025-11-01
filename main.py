@@ -1,24 +1,16 @@
-import os
-
-from Flight_Manager_Panda import AirportDataOptimized
+from utils.clear_screen import clear_screen
+from Flight_Manager import AirportDataOptimized
 from flight_search import FlightSearch
 from bookings import BookingSystem
 from view_list import view_main
 
+# Initialize the airport data manager as a global instance
 airport_data: AirportDataOptimized = AirportDataOptimized(
     flights_path="./data/Flights.csv",
     passengers_path="./data/Passengers.csv",
     bookings_path="./data/Bookings.csv",
     aircraft_path="./data/Aircraft.csv"
 )
-
-def clear_screen():
-    # Windows
-    if os.name == 'nt':
-        os.system('cls')
-    # macOS / Linux / Unix
-    else:
-        os.system('clear')
 
 def main():
     while True:
@@ -36,32 +28,11 @@ def main():
         
         user_option = input("\nEnter your choice (1-5): ").strip()
 
-        # --- OPTION 1: Search a Flight ---
+                # --- OPTION 1: Search a Flight ---
         if user_option == "1":
             clear_screen()
             search = FlightSearch(airport_data)
-
-            departure = input("Enter departure city: ")
-            arrival = input("Enter arrival city: ")
-            date = input("Enter date (YYYY-MM-DD): ")
-
-            results = search.search(departure, arrival, date)
-            if results:
-                print("\nAvailable flights:")
-                for flight in results:
-                    print(flight)
-
-                book_now = input("\nWould you like to book a seat? (yes/no): ").lower()
-                if book_now == "yes":
-                    clear_screen()
-                    print("Loading Booking System...")
-                    booking_system = BookingSystem(airport_data)
-                    booking_system.interactive_booking()
-                else:
-                    input("\nPress Enter to return to the main menu...")
-            else:
-                print("\nNo flights available.")
-                input("\nPress Enter to return to the main menu...")
+            search.interactive_search_and_booking()
 
         # --- OPTION 2: Book a Flight Directly ---
         elif user_option == "2":
