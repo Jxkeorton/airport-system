@@ -1,9 +1,16 @@
 import os
 
-from flight_manager import FlightManager
+from Flight_Manager_Panda import AirportDataOptimized
 from flight_search import FlightSearch
 from bookings import BookingSystem
 from view_list import view_main
+
+airport_data: AirportDataOptimized = AirportDataOptimized(
+    flights_path="./data/Flights.csv",
+    passengers_path="./data/Passengers.csv",
+    bookings_path="./data/Bookings.csv",
+    aircraft_path="./data/Aircraft.csv"
+)
 
 def clear_screen():
     # Windows
@@ -32,8 +39,7 @@ def main():
         # --- OPTION 1: Search a Flight ---
         if user_option == "1":
             clear_screen()
-            manager = FlightManager("mockData.csv")
-            search = FlightSearch(manager.flights)
+            search = FlightSearch(airport_data)
 
             departure = input("Enter departure city: ")
             arrival = input("Enter arrival city: ")
@@ -49,12 +55,7 @@ def main():
                 if book_now == "yes":
                     clear_screen()
                     print("Loading Booking System...")
-                    booking_system = BookingSystem(
-                        flights_csv="Flights.csv",
-                        passengers_csv="Passengers.csv",
-                        bookings_csv="Bookings.csv",
-                        aircraft_csv="Aircraft.csv"
-                    )
+                    booking_system = BookingSystem(airport_data)
                     booking_system.interactive_booking()
                 else:
                     input("\nPress Enter to return to the main menu...")

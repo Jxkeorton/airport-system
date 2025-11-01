@@ -5,14 +5,9 @@ from Flight_Manager_Panda import AirportDataOptimized
 class BookingSystem:
     """Main booking system to handle flight seat reservations"""
     
-    def __init__(self, flights_csv, passengers_csv, bookings_csv, aircraft_csv):
+    def __init__(self, airport_data: AirportDataOptimized):
         # Use the optimized AirportDataOptimized class for data management
-        self.data_manager = AirportDataOptimized(
-            flights_path=flights_csv,
-            passengers_path=passengers_csv,
-            bookings_path=bookings_csv,
-            aircraft_path=aircraft_csv
-        )
+        self.data_manager = airport_data
         self.next_booking_id = self.get_next_booking_id()
 
     def get_next_booking_id(self):

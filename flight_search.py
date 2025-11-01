@@ -1,5 +1,3 @@
-from datetime import datetime
-
 # Search algorithm notes
 # Ordered or unordered linear search ? 
 #   benefits of ordered is that we can stop early during a search.
@@ -27,18 +25,29 @@ from datetime import datetime
 #  Make search more flexible
 
 # Search flights
-class FlightSearch:
-    def __init__(self, flights):
-        self.flights = flights
+from datetime import datetime
+from Flight_Manager_Panda import AirportDataOptimized
+import pandas as pd
 
-    # Currently not flexible
+class FlightSearch:
+    def __init__(self, airport_data: AirportDataOptimized):
+        self.airport_data = airport_data
+
     def search(self, departure_city, arrival_city, date):
-        date = datetime.strptime(date, "%Y-%m-%d")
-        results = [
-            flight for flight in self.flights
-            if  
-               flight.arrival_city == arrival_city and
-               flight.date_time.date() == date.date() and
-               flight.is_available()
+        """
+        Search for flights based on departure city, arrival city, and date.
+        """
+        # Convert the date string to a datetime object
+        date = datetime.strptime(date, "%Y-%m-%d").date()
+
+        # Use Pandas DataFrame filtering for efficient searching
+        flights_df = self.airport_data.flights
+        results = flights_df[
+            (flights_df['DepartureCity'] == departure_city) &
+            (flights_df['ArrivalCity'] == arrival_city) &
+            (pd.to_datetime(flights_df['DateTime']).dt.date == date) &
+            (flights_df['Status'] == "Scheduled")
         ]
-        return results
+
+        # Convert the filtered DataFrame to a list of dictionaries (or another format if needed)
+        return results.to_dict('records')
