@@ -2,7 +2,10 @@ from utils.clear_screen import clear_screen
 from Flight_Manager import AirportData
 from flight_search import FlightSearch
 from bookings import BookingSystem
-from view_list import view_main
+from view_list import view_list
+
+# Display a loading message
+print("Loading Airport System... Please wait.")
 
 # Initialize the airport data manager as a global instance
 airport_data: AirportData = AirportData(
@@ -32,23 +35,18 @@ def main():
         if user_option == "1":
             clear_screen()
             search = FlightSearch(airport_data)
-            search.interactive_search_and_booking()
+            search.flight_search()
 
         # --- OPTION 2: Book a Flight Directly ---
         elif user_option == "2":
             clear_screen()
-            print("Loading Booking System...")
             booking_system = BookingSystem(airport_data)
             booking_system.interactive_booking()
             input("\nPress Enter to return to the main menu...")
 
         # --- OPTION 3: View a list of flights ---
         elif user_option == "3":
-            view_main(               
-                flights_csv="./data/Flights.csv",
-                passengers_csv="./data/Passengers.csv",
-                bookings_csv="./data/Bookings.csv"
-            )
+            view_list(airport_data)
 
         # --- OPTION 4: Placeholder ---
         elif user_option == "4":
