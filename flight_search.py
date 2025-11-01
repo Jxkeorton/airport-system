@@ -1,30 +1,5 @@
-# Search algorithm notes
-# Ordered or unordered linear search ? 
-#   benefits of ordered is that we can stop early during a search.
-# Binary search algorithm ? 
-#   if data cannot be sorted then you cannot use binary search.
-# Ternary search algorithm ? 
-#   Ternary search is a divide-and-conquer algorithm that works on sorted arrays.
-#  It divides the array into three parts and determines which part may contain the target value.
-# Interpolation search ? 
-#   Interpolation search is an improved variant of binary search that works on the probing position of
-#   the required value. It is best suited for uniformly distributed data. 
-#   could use this method to search via date ranges if data is sorted by date.
-
-# consider search algorithms specific to numeric and non numeric data ?
-
-# Justify programming language used 
-
-# Create a data structure for each iteration of the search ? 
-#   this could be achieved by sorting data as it is collected from the data structure in the file manager.
-#   alternatively the data could be collected per key and then sorted into a list in the end through filtering and merging <- seems slower 
-
 # TODO : 
-#  connect to new flight manager.
-#  Create new search algorithm with clever sorting and search using tips above
 #  Make search more flexible
-
-# Search flights
 
 from Flight_Manager import AirportData
 from bookings import BookingSystem
@@ -36,24 +11,25 @@ import pandas as pd
 class FlightSearch:
     def __init__(self, airport_data: AirportData):
         self.airport_data = airport_data
+        # Sort and index the DataFrame during initialization
+        self.airport_data.flights.sort_values(by=['DepartureCity', 'ArrivalCity', 'DateTime'], inplace=True)
+        self.airport_data.flights.set_index(['DepartureCity', 'ArrivalCity', 'DateTime'], inplace=True)
 
     def search(self, departure_city, arrival_city, date):
         """
         Search for flights based on departure city, arrival city, and date.
         """
         # Convert the date string to a datetime object
-        date = datetime.strptime(date, "%Y-%m-%d").date()
+        date = datetime.strptime(date, "%Y-%m-%d")
 
-        # Use Pandas DataFrame filtering for efficient searching
-        flights_df = self.airport_data.flights
-        results = flights_df[
-            (flights_df['DepartureCity'] == departure_city) &
-            (flights_df['ArrivalCity'] == arrival_city) &
-            (pd.to_datetime(flights_df['DateTime']).dt.date == date) &
-            (flights_df['Status'] == "Scheduled")
-        ]
+        # Use the index to filter data
+        try:
+            results = self.airport_data.flights.loc[(departure_city, arrival_city, date)]
+        except KeyError:
+            # No matching flights found
+            return []
 
-        # Convert the filtered DataFrame to a list of dictionaries (or another format if needed)
+        # Convert the filtered DataFrame to a list of dictionaries
         return results.to_dict('records')
 
     def flight_search(self):
@@ -73,7 +49,6 @@ class FlightSearch:
             book_now = input("\nWould you like to book a seat? (yes/no): ").lower()
             if book_now == "yes":
                 clear_screen()
-                print("Loading Booking System...")
                 booking_system = BookingSystem(self.airport_data)
                 booking_system.interactive_booking()
             else:
