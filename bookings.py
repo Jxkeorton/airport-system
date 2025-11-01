@@ -1,12 +1,12 @@
 import pandas as pd
 
-from Flight_Manager import AirportDataOptimized
+from Flight_Manager import AirportData
 
 class BookingSystem:
     """Main booking system to handle flight seat reservations"""
     
-    def __init__(self, airport_data: AirportDataOptimized):
-        # Use the optimized AirportDataOptimized class for data management
+    def __init__(self, airport_data: AirportData):
+        # Use the optimized AirportData class for data management
         self.data_manager = airport_data
         self.next_booking_id = self.get_next_booking_id()
 

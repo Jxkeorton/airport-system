@@ -1,11 +1,11 @@
 from utils.clear_screen import clear_screen
-from Flight_Manager import AirportDataOptimized
+from Flight_Manager import AirportData
 from flight_search import FlightSearch
 from bookings import BookingSystem
 from view_list import view_main
 
 # Initialize the airport data manager as a global instance
-airport_data: AirportDataOptimized = AirportDataOptimized(
+airport_data: AirportData = AirportData(
     flights_path="./data/Flights.csv",
     passengers_path="./data/Passengers.csv",
     bookings_path="./data/Bookings.csv",

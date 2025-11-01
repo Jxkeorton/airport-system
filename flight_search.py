@@ -26,7 +26,7 @@
 
 # Search flights
 
-from Flight_Manager import AirportDataOptimized
+from Flight_Manager import AirportData
 from bookings import BookingSystem
 from utils.clear_screen import clear_screen
 
@@ -34,7 +34,7 @@ from datetime import datetime
 import pandas as pd
 
 class FlightSearch:
-    def __init__(self, airport_data: AirportDataOptimized):
+    def __init__(self, airport_data: AirportData):
         self.airport_data = airport_data
 
     def search(self, departure_city, arrival_city, date):

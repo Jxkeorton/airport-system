@@ -1,8 +1,8 @@
 import pandas as pd
 
-class AirportDataOptimized:
+class AirportData:
     """
-    The AirportDataOptimized class manages airport data efficiently.
+    The AirportData class manages airport data efficiently.
     It loads Flights, Passengers, Bookings, and Aircraft from CSVs into pandas DataFrames
     and also builds hash map indexes for lookups by ID.
     """
