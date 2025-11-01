@@ -1,5 +1,5 @@
 import csv
-from sort_data import merge_sort
+from utils.sort_data import merge_sort
 
 #hi
 

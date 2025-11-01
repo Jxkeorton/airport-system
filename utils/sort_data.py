@@ -1,5 +1,5 @@
 # ------------------------------------------
-# Data Structures & Algorithms: Merge Sort applied 
+# Merge Sort for view functions
 # ------------------------------------------
 
 def merge_sort(data, key, reverse=False):
