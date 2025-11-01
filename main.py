@@ -66,15 +66,15 @@ def main():
             clear_screen()
             print("Loading Booking System...")
             booking_system = BookingSystem(
-                flights_csv="Flights.csv",
-                passengers_csv="Passengers.csv",
-                bookings_csv="Bookings.csv",
-                aircraft_csv="Aircraft.csv"
+                flights_csv="./data/Flights.csv",
+                passengers_csv="./data/Passengers.csv",
+                bookings_csv="./data/Bookings.csv",
+                aircraft_csv="./data/Aircraft.csv"
             )
             booking_system.interactive_booking()
             input("\nPress Enter to return to the main menu...")
 
-        # --- OPTION 3: Placeholder ---
+        # --- OPTION 3: View a list of flights ---
         elif user_option == "3":
             print("\nFeature under development: View Flight Information")
             input("\nPress Enter to return to the main menu...")

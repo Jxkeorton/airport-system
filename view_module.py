@@ -60,3 +60,27 @@ def view_passengers():
     for p in passengers:
         print(f"{p['PassengerID']} | {p['FirstName']} {p['Surname']} | DOB: {p['DOB']} | Email: {p['Email']}")
 
+def view_main():
+    while True:
+        print("\n--- EDD Airlines Viewing System ---")
+        print("1 - View Flights (by Price)")
+        print("2 - View Reservations (by Date)")
+        
+        print("3 - View Passengers")
+        print("0 - Exit")
+
+        choice = input("Enter choice: ")
+
+        if choice == "1":
+            view_flights_by_price()
+        elif choice == "2":
+            view_reservations_by_date()
+        elif choice == "3":
+            view_passengers()
+        elif choice == "0":
+            print("Exiting Viewer...")
+            break
+        else:
+            print("Invalid choice. Try again!")
+
+
