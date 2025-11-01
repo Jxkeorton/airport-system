@@ -28,7 +28,7 @@ def main():
         
         user_option = input("\nEnter your choice (1-5): ").strip()
 
-                # --- OPTION 1: Search a Flight ---
+        # --- OPTION 1: Search a Flight ---
         if user_option == "1":
             clear_screen()
             search = FlightSearch(airport_data)
