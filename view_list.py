@@ -1,4 +1,3 @@
-import pandas as pd
 import csv
 from data_structures import merge_sort
 
@@ -11,9 +10,9 @@ def load_csv_data(filename):
         return list(reader)
 
 
-def view_flights_by_price():
-    flights = load_csv_data("Flights.csv")
+def view_flights_by_price(flights_csv):
 
+    flights = load_csv_data(flights_csv)
     # Convert CostPerSeat to float for sorting
     for f in flights:
         try:
@@ -31,9 +30,9 @@ def view_flights_by_price():
         )
 
 
-def view_reservations_by_date():
-    reservations = load_csv_data("Bookings.csv")
-
+def view_reservations_by_date(bookings_csv):
+    reservations = load_csv_data(bookings_csv)
+    
     if not reservations:
         print("No booking data found.")
         return
@@ -49,8 +48,8 @@ def view_reservations_by_date():
 
 
 
-def view_passengers():
-    passengers = load_csv_data("Passengers.csv")
+def view_passengers(passengers_csv):
+    passengers = load_csv_data(passengers_csv)
 
     if not passengers:
         print("No passenger data found.")
@@ -60,7 +59,7 @@ def view_passengers():
     for p in passengers:
         print(f"{p['PassengerID']} | {p['FirstName']} {p['Surname']} | DOB: {p['DOB']} | Email: {p['Email']}")
 
-def view_main():
+def view_main(flights_csv, passengers_csv, bookings_csv):
     while True:
         print("\n--- EDD Airlines Viewing System ---")
         print("1 - View Flights (by Price)")
@@ -72,11 +71,11 @@ def view_main():
         choice = input("Enter choice: ")
 
         if choice == "1":
-            view_flights_by_price()
+            view_flights_by_price( flights_csv )
         elif choice == "2":
-            view_reservations_by_date()
+            view_reservations_by_date( bookings_csv )
         elif choice == "3":
-            view_passengers()
+            view_passengers( passengers_csv )
         elif choice == "0":
             print("Exiting Viewer...")
             break

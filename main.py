@@ -3,6 +3,7 @@ import os
 from flight_manager import FlightManager
 from flight_search import FlightSearch
 from bookings import BookingSystem
+from view_list import view_main
 
 def clear_screen():
     # Windows
@@ -76,8 +77,11 @@ def main():
 
         # --- OPTION 3: View a list of flights ---
         elif user_option == "3":
-            print("\nFeature under development: View Flight Information")
-            input("\nPress Enter to return to the main menu...")
+            view_main(               
+                flights_csv="./data/Flights.csv",
+                passengers_csv="./data/Passengers.csv",
+                bookings_csv="./data/Bookings.csv"
+            )
 
         # --- OPTION 4: Placeholder ---
         elif user_option == "4":
