@@ -1,6 +1,3 @@
 /__pycache__
-/bookings.py
-/.vs/ProjectSettings.json
-/.vs/slnx.sqlite
-/.vs/VSWorkspaceState.json
-/.vs/airport-system
+/.vs
+/.venv
