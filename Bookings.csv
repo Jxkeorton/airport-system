@@ -15001,5 +15001,3 @@ BookingID,FlightID,PassengerID,SeatNumber,Status
 15000,1609,8763,93,Cancelled
 15001,37,4,5,Booked
 15002,21,17,62,Booked
-15003,2001,1,218,Booked
-15004,2002,10,239,Booked

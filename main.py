@@ -3,6 +3,7 @@ from Flight_Manager import AirportData
 from flight_search import FlightSearch
 from bookings import BookingSystem
 from view_list import view_list
+from add_remove import AdminManager
 
 # Display a loading message
 print("Loading Airport System... Please wait.")
@@ -50,8 +51,9 @@ def main():
 
         # --- OPTION 4: Placeholder ---
         elif user_option == "4":
-            print("\nFeature under development: Admin Function")
-            input("\nPress Enter to return to the main menu...")
+            clear_screen()
+            admin = AdminManager(airport_data)
+            admin.interactive_menu()
 
         # --- OPTION 5: Exit ---
         elif user_option == "5":
