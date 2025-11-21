@@ -82,7 +82,7 @@ class AdminManager:
         id_col = self.get_id_column(category)
         
         if df is None:
-            return False, f"⚠️ Invalid category: {category}"
+            return False, f" Invalid category: {category}"
         
         # CRITICAL: Reset any multi-level indexes that might exist from FlightSearch
         # This ensures the DataFrame has normal columns before we try to add new data
@@ -111,25 +111,25 @@ class AdminManager:
             if category == 'flight':
                 new_row = self._add_flight_specific(new_row)
                 if new_row is None:
-                    return False, "❌ Flight creation cancelled."
+                    return False, " Flight creation cancelled."
             
             # Booking-specific: validate flight and passenger exist
             elif category == 'booking':
                 new_row = self._add_booking_specific(new_row)
                 if new_row is None:
-                    return False, "❌ Booking creation cancelled."
+                    return False, " Booking creation cancelled."
             
             # Passenger-specific
             elif category == 'passenger':
                 new_row = self._add_passenger_specific(new_row)
                 if new_row is None:
-                    return False, "❌ Passenger creation cancelled."
+                    return False, " Passenger creation cancelled."
             
             # Aircraft-specific
             elif category == 'aircraft':
                 new_row = self._add_aircraft_specific(new_row)
                 if new_row is None:
-                    return False, "❌ Aircraft creation cancelled."
+                    return False, " Aircraft creation cancelled."
             
             # Add the new row to the DataFrame
             new_df_row = pd.DataFrame([new_row])
@@ -155,17 +155,17 @@ class AdminManager:
                 )
                 self.data_manager.aircraft_index[new_row['AircraftID']] = new_row
             
-            return True, f"✅ Added new {category} with {id_col} = {new_id}"
+            return True, f" Added new {category} with {id_col} = {new_id}"
             
         except Exception as e:
-            return False, f"❌ Error adding {category}: {e}"
+            return False, f" Error adding {category}: {e}"
 
     def _add_flight_specific(self, new_row):
         """Handle flight-specific input"""
         try:
             # Show available aircraft
             if self.data_manager.aircraft.empty:
-                print("⚠️ No aircraft available in the system.")
+                print(" No aircraft available in the system.")
                 return None
             
             print("\nAvailable Aircraft:")
@@ -180,7 +180,7 @@ class AdminManager:
                 aircraft = self.data_manager.get_aircraft_by_id(aircraft_id)
                 if aircraft is not None:
                     break
-                print("❌ Invalid AircraftID. Please enter a valid one.")
+                print(" Invalid AircraftID. Please enter a valid one.")
             
             # Auto-fill capacity based on aircraft
             flight_capacity = int(aircraft['Rows']) * int(aircraft['SeatsInARow'])
@@ -201,28 +201,28 @@ class AdminManager:
                     break
                 else:
                     if error_msg:
-                        print(f"❌ {error_msg}")
+                        print(f" {error_msg}")
                     else:
-                        print("❌ Invalid format. Please use YYYY-MM-DD HH:MM:SS (e.g., 2025-12-25 14:30:00)")
+                        print(" Invalid format. Please use YYYY-MM-DD HH:MM:SS (e.g., 2025-12-25 14:30:00)")
             
             # Validate cost is positive
             while True:
                 try:
                     cost = float(input("Cost per Seat (€): "))
                     if cost <= 0:
-                        print("❌ Cost must be greater than 0")
+                        print(" Cost must be greater than 0")
                         continue
                     new_row['CostPerSeat'] = cost
                     break
                 except ValueError:
-                    print("❌ Please enter a valid number")
+                    print(" Please enter a valid number")
             
             new_row['Status'] = 'Scheduled'
             
             return new_row
             
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             return None
 
     def _add_booking_specific(self, new_row):
@@ -232,17 +232,17 @@ class AdminManager:
             flight_id = int(input("Enter Flight ID: ").strip())
             flight = self.data_manager.get_flight_by_id(flight_id)
             if flight is None:
-                print(f"❌ Flight ID {flight_id} not found.")
+                print(f" Flight ID {flight_id} not found.")
                 return None
             if flight['Status'] == 'Cancelled':
-                print(f"❌ Flight {flight_id} has been cancelled.")
+                print(f" Flight {flight_id} has been cancelled.")
                 return None
             
             # Get and validate Passenger ID
             passenger_id = int(input("Enter Passenger ID: ").strip())
             passenger = self.data_manager.get_passenger_by_id(passenger_id)
             if passenger is None:
-                print(f"❌ Passenger ID {passenger_id} not found.")
+                print(f" Passenger ID {passenger_id} not found.")
                 return None
             
             # Get seat number
@@ -256,10 +256,10 @@ class AdminManager:
             return new_row
             
         except ValueError:
-            print("❌ Invalid input. Please enter numeric values.")
+            print(" Invalid input. Please enter numeric values.")
             return None
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             return None
 
     def _add_passenger_specific(self, new_row):
@@ -275,17 +275,17 @@ class AdminManager:
                 if valid:
                     # Check if DOB is in the future
                     if dob_obj > datetime.now():
-                        print("❌ Date of birth cannot be in the future")
+                        print(" Date of birth cannot be in the future")
                         continue
                     # Check if person is too old (e.g., over 120 years)
                     age = (datetime.now() - dob_obj).days / 365.25
                     if age > 120:
-                        print("❌ Invalid date of birth (person would be over 120 years old)")
+                        print(" Invalid date of birth (person would be over 120 years old)")
                         continue
                     new_row['DOB'] = dob_str
                     break
                 else:
-                    print("❌ Invalid date format. Please use YYYY-MM-DD (e.g., 1990-05-15)")
+                    print(" Invalid date format. Please use YYYY-MM-DD (e.g., 1990-05-15)")
             
             # Validate Email
             while True:
@@ -295,7 +295,7 @@ class AdminManager:
                     new_row['Email'] = email
                     break
                 else:
-                    print(f"❌ {error_msg}. Email must contain @ and a domain (e.g., user@example.com)")
+                    print(f" {error_msg}. Email must contain @ and a domain (e.g., user@example.com)")
             
             # Validate Phone Number
             while True:
@@ -305,14 +305,14 @@ class AdminManager:
                     new_row['PhoneNumber'] = phone
                     break
                 else:
-                    print(f"❌ {error_msg}. Please enter at least 7 digits")
+                    print(f" {error_msg}. Please enter at least 7 digits")
             
             new_row['Address'] = input("Address: ").strip()
             
             return new_row
             
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             return None
 
     def _add_aircraft_specific(self, new_row):
@@ -323,7 +323,7 @@ class AdminManager:
             
             # Check if aircraft already exists
             if self.data_manager.get_aircraft_by_id(aircraft_id) is not None:
-                print(f"❌ Aircraft {aircraft_id} already exists.")
+                print(f" Aircraft {aircraft_id} already exists.")
                 return None
             
             new_row['AircraftID'] = aircraft_id
@@ -333,10 +333,10 @@ class AdminManager:
             return new_row
             
         except ValueError:
-            print("❌ Invalid input. Please enter numeric values for rows and seats.")
+            print(" Invalid input. Please enter numeric values for rows and seats.")
             return None
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             return None
 
     # ==================== CANCEL ENTRY ====================
@@ -348,7 +348,7 @@ class AdminManager:
         id_col = self.get_id_column(category)
         
         if df is None:
-            return False, f"⚠️ Invalid category: {category}"
+            return False, f" Invalid category: {category}"
         
         # CRITICAL: Reset any multi-level indexes that might exist from FlightSearch
         if category == 'flight' and isinstance(self.data_manager.flights.index, pd.MultiIndex):
@@ -365,7 +365,7 @@ class AdminManager:
         try:
             # Ensure Status column exists
             if 'Status' not in df.columns:
-                return False, f"⚠️ {category} does not have a Status column."
+                return False, f" {category} does not have a Status column."
             
             entry_num = input(f"Enter {id_col} to cancel: ").strip()
             
@@ -374,14 +374,14 @@ class AdminManager:
                 entry_id = entry_num
             else:
                 if not entry_num.isdigit():
-                    return False, "❌ Invalid ID. Must be a number."
+                    return False, " Invalid ID. Must be a number."
                 entry_id = int(entry_num)
             
             # Check if entry exists
             if category == 'flight':
                 entry = self.data_manager.get_flight_by_id(entry_id)
                 if entry is None:
-                    return False, f"⚠️ {id_col} {entry_id} not found."
+                    return False, f" {id_col} {entry_id} not found."
                 # Update the DataFrame
                 self.data_manager.flights.loc[
                     self.data_manager.flights[id_col] == entry_id, 'Status'
@@ -392,7 +392,7 @@ class AdminManager:
             elif category == 'booking':
                 entry = self.data_manager.get_booking_by_id(entry_id)
                 if entry is None:
-                    return False, f"⚠️ {id_col} {entry_id} not found."
+                    return False, f" {id_col} {entry_id} not found."
                 # Update the DataFrame
                 self.data_manager.bookings.loc[
                     self.data_manager.bookings[id_col] == entry_id, 'Status'
@@ -401,15 +401,15 @@ class AdminManager:
                 self.data_manager.booking_index[entry_id]['Status'] = 'Cancelled'
                 
             elif category == 'passenger':
-                return False, "⚠️ Passengers cannot be cancelled. Use delete instead."
+                return False, " Passengers cannot be cancelled. Use delete instead."
                 
             elif category == 'aircraft':
-                return False, "⚠️ Aircraft cannot be cancelled. Use delete instead."
+                return False, " Aircraft cannot be cancelled. Use delete instead."
             
-            return True, f"🚫 {category.capitalize()} {entry_id} has been cancelled."
+            return True, f" {category.capitalize()} {entry_id} has been cancelled."
             
         except Exception as e:
-            return False, f"❌ Error cancelling {category}: {e}"
+            return False, f" Error cancelling {category}: {e}"
 
     # ==================== DELETE ENTRY ====================
     
@@ -420,7 +420,7 @@ class AdminManager:
         id_col = self.get_id_column(category)
         
         if df is None:
-            return False, f"⚠️ Invalid category: {category}"
+            return False, f" Invalid category: {category}"
         
         # CRITICAL: Reset any multi-level indexes that might exist from FlightSearch
         if category == 'flight' and isinstance(self.data_manager.flights.index, pd.MultiIndex):
@@ -437,7 +437,7 @@ class AdminManager:
         print(f"\n{'='*50}")
         print(f"DELETE {category.upper()}")
         print(f"{'='*50}")
-        print("⚠️  WARNING: This action cannot be undone!")
+        print("  WARNING: This action cannot be undone!")
         
         try:
             entry_num = input(f"Enter {id_col} to delete: ").strip()
@@ -447,20 +447,20 @@ class AdminManager:
                 entry_id = entry_num
             else:
                 if not entry_num.isdigit():
-                    return False, "❌ Invalid ID. Must be a number."
+                    return False, " Invalid ID. Must be a number."
                 entry_id = int(entry_num)
             
             # Check if entry exists and show details
             if category == 'flight':
                 entry = self.data_manager.get_flight_by_id(entry_id)
                 if entry is None:
-                    return False, f"⚠️ {id_col} {entry_id} not found."
+                    return False, f" {id_col} {entry_id} not found."
                 print(f"\nFlight: {entry['DepartureCity']} → {entry['ArrivalCity']} on {entry['DateTime']}")
                 
                 # Check for bookings
                 bookings = self.data_manager.get_bookings_for_flight(entry_id)
                 if not bookings.empty:
-                    print(f"⚠️  This flight has {len(bookings)} booking(s).")
+                    print(f"  This flight has {len(bookings)} booking(s).")
                     confirm = input("Type 'DELETE' to confirm deletion of flight AND all bookings: ")
                     if confirm != 'DELETE':
                         return False, "Deletion cancelled."
@@ -472,13 +472,13 @@ class AdminManager:
             elif category == 'booking':
                 entry = self.data_manager.get_booking_by_id(entry_id)
                 if entry is None:
-                    return False, f"⚠️ {id_col} {entry_id} not found."
+                    return False, f" {id_col} {entry_id} not found."
                 print(f"\nBooking: Flight {entry['FlightID']}, Passenger {entry['PassengerID']}, Seat {entry['SeatNumber']}")
                 
             elif category == 'passenger':
                 entry = self.data_manager.get_passenger_by_id(entry_id)
                 if entry is None:
-                    return False, f"⚠️ {id_col} {entry_id} not found."
+                    return False, f" {id_col} {entry_id} not found."
                 print(f"\nPassenger: {entry['FirstName']} {entry['Surname']}")
                 
                 # Check for bookings
@@ -486,7 +486,7 @@ class AdminManager:
                     self.data_manager.bookings['PassengerID'] == entry_id
                 ]
                 if not passenger_bookings.empty:
-                    print(f"⚠️  This passenger has {len(passenger_bookings)} booking(s).")
+                    print(f"  This passenger has {len(passenger_bookings)} booking(s).")
                     confirm = input("Type 'DELETE' to confirm deletion of passenger AND all bookings: ")
                     if confirm != 'DELETE':
                         return False, "Deletion cancelled."
@@ -498,7 +498,7 @@ class AdminManager:
             elif category == 'aircraft':
                 entry = self.data_manager.get_aircraft_by_id(entry_id)
                 if entry is None:
-                    return False, f"⚠️ {id_col} {entry_id} not found."
+                    return False, f" {id_col} {entry_id} not found."
                 print(f"\nAircraft: {entry['AircraftID']} ({entry['Rows']}x{entry['SeatsInARow']} seats)")
                 
                 # Check if aircraft is used in any flights
@@ -506,7 +506,7 @@ class AdminManager:
                     self.data_manager.flights['AeroplaneNumber'] == entry_id
                 ]
                 if not aircraft_flights.empty:
-                    return False, f"❌ Cannot delete aircraft {entry_id}. It is used in {len(aircraft_flights)} flight(s)."
+                    return False, f" Cannot delete aircraft {entry_id}. It is used in {len(aircraft_flights)} flight(s)."
             
             # Final confirmation if not already done
             if category not in ['flight', 'passenger']:
@@ -545,7 +545,7 @@ class AdminManager:
             return True, f"🗑️  Deleted {category} {entry_id} successfully."
             
         except Exception as e:
-            return False, f"❌ Error deleting {category}: {e}"
+            return False, f" Error deleting {category}: {e}"
 
     # ==================== SAVE DATA ====================
     
@@ -553,9 +553,9 @@ class AdminManager:
         """Save all changes to CSV files"""
         try:
             self.data_manager.save_data()
-            return True, "💾 All changes saved successfully."
+            return True, " All changes saved successfully."
         except Exception as e:
-            return False, f"❌ Error saving data: {e}"
+            return False, f" Error saving data: {e}"
 
     # ==================== INTERACTIVE MENU ====================
     
@@ -578,7 +578,7 @@ class AdminManager:
                 break
             
             if action not in ['1', '2', '3']:
-                print("❌ Invalid choice. Please select 1-4.")
+                print(" Invalid choice. Please select 1-4.")
                 input("\nPress Enter to continue...")
                 continue
             
@@ -600,7 +600,7 @@ class AdminManager:
             
             category = category_map.get(cat_choice)
             if not category:
-                print("❌ Invalid category choice.")
+                print(" Invalid category choice.")
                 input("\nPress Enter to continue...")
                 continue
             
