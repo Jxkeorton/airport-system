@@ -18,9 +18,11 @@ class FlightSearch:
         # Create a new column for the date only (ignoring time)
         self.airport_data.flights['Date'] = self.airport_data.flights['DateTime'].dt.date
 
-        # Sort and index the DataFrame by DepartureCity, ArrivalCity, and Date
-        self.airport_data.flights.sort_values(by=['DepartureCity', 'ArrivalCity', 'Date'], inplace=True)
-        self.airport_data.flights.set_index(['DepartureCity', 'ArrivalCity', 'Date'], inplace=True)
+        self.search_df = self.airport_data.flights.copy()
+        
+        # Sort and index the COPY (not the original)
+        self.search_df.sort_values(by=['DepartureCity', 'ArrivalCity', 'Date'], inplace=True)
+        self.search_df.set_index(['DepartureCity', 'ArrivalCity', 'Date'], inplace=True)
 
     def search(self, departure_city, arrival_city, date):
         """
@@ -30,8 +32,7 @@ class FlightSearch:
             # Convert the input date to a datetime.date object
             date = datetime.strptime(date, "%Y-%m-%d").date()
 
-            # Use the index to filter data
-            results = self.airport_data.flights.loc[(departure_city, arrival_city, date)]
+            results = self.search_df.loc[(departure_city, arrival_city, date)]
 
             # Ensure the result is always a DataFrame
             if isinstance(results, pd.Series):
