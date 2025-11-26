@@ -542,7 +542,7 @@ class AdminManager:
             # Rebuild indexes to ensure consistency
             self.data_manager.rebuild_indexes()
             
-            return True, f"🗑️  Deleted {category} {entry_id} successfully."
+            return True, f"  Deleted {category} {entry_id} successfully."
             
         except Exception as e:
             return False, f" Error deleting {category}: {e}"
