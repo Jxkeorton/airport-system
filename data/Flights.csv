@@ -1999,4 +1999,4 @@ FlightID,AeroplaneNumber,DepartureCity,ArrivalCity,DateTime,FlightCapacity,SeatN
 1998,A072,Liverpool,London,2026-01-26 00:00:00,214,,581.05,Scheduled,2026-01-26
 1999,A009,Sheffield,Leeds,2026-10-27 04:00:00,274,,386.69,Completed,2026-10-27
 2000,A004,Glasgow,Bristol,2026-03-09 23:00:00,282,,617.85,Cancelled,2026-03-09
-2001,A074,Cardiff,Madrid,2026-05-22 06:00:00,288,,150.0,Scheduled,
+2001,A074,Cardiff,Madrid,2026-05-22 06:00:00,288,,150.0,Scheduled,2026-05-22
